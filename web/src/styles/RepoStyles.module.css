@@ -1,0 +1,54 @@
+.repoContainer {
+  background-color: rgb(68, 68, 68);
+  width: 320px;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+}
+
+.mainInfoContainer {
+  padding: 0 10px;
+  cursor: pointer;
+  color: white;
+}
+
+.clickMessage {
+  font-size: 0.7rem;
+  text-align: end;
+}
+
+.modalContainer {
+  background-color: rgb(180, 180, 180);
+}
+
+.modalContainer > button {
+  background-color: white;
+  color: black;
+}
+
+.readMeContainer {
+  padding-left: 5px;
+  font-size: 0.9rem;
+}
+
+@media (min-width: 450px) {
+  .repoContainer {
+    width: 450px;
+  }
+}
+@media (min-width: 600px) {
+  .repoContainer {
+    width: 600px;
+  }
+}
+@media (min-width: 900px) {
+  .repoContainer {
+    width: 800px;
+  }
+}
+@media (min-width: 1200px) {
+  .repoContainer {
+    width: 1000px;
+  }
+}
