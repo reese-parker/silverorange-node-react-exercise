@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import organizeReverseChronological from '../helpers/organizeReverseChronological';
+import Repo from './Repo';
 
 export default function Repos() {
   const [repos, setRepos] = useState([]);
@@ -16,7 +17,6 @@ export default function Repos() {
         setLoadingStatus('succeeded');
         const data = organizeReverseChronological(response.data);
         setRepos(data);
-
         // Creates new array with unique language values
         setLanguages([...new Set(data.map((repo) => repo.language))]);
       })
@@ -57,11 +57,11 @@ export default function Repos() {
           {/* Renders repo names, filters if a language is selected */}
           <div>
             {languageFilter === 'all'
-              ? repos.map((repo) => <p key={repo.id}>{repo.name}</p>)
+              ? repos.map((repo) => <Repo key={repo.id} repo={repo} />)
               : repos.map(
                   (repo) =>
                     repo.language === languageFilter && (
-                      <p key={repo.id}>{repo.name}</p>
+                      <Repo key={repo.id} repo={repo} />
                     )
                 )}
           </div>
