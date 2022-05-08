@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import organizeReverseChronological from '../helpers/organizeReverseChronological';
 
 export default function Repos() {
   const [repos, setRepos] = useState([]);
   const [loadingStatus, setLoadingStatus] = useState('idle');
+
   const fetchReposFromServer = () => {
     setLoadingStatus('loading');
     axios
       .get('http://localhost:4000/repos')
       .then((response) => {
         setLoadingStatus('succeeded');
-        setRepos(response.data);
+        const data = organizeReverseChronological(response.data);
+        setRepos(data);
       })
       .catch((err) => {
         setLoadingStatus('failed');
