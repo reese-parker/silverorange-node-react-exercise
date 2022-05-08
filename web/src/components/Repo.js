@@ -3,6 +3,7 @@ import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
 
 export default function Repo({ repo }) {
+  const [showModal, setShowModal] = useState(false);
   const [readMeMarkdown, setReadMeMarkdown] = useState(null);
 
   axios
@@ -21,29 +22,33 @@ export default function Repo({ repo }) {
   return (
     <div>
       {/* Main repo info container */}
-      <div>
+      <div onClick={() => setShowModal(!showModal)}>
         <p>{repo.name}</p>
         <p>{repo.created_at}</p>
         <p>{repo.description}</p>
         <p>{repo.language}</p>
         <p>{repo.forks_count}</p>
+        {!showModal && <p>Click for more info</p>}
       </div>
 
       {/* Modal container */}
-      <div>
-        <p>Most recent commit</p>
-        <p>Commit author</p>
-        <p>Commit message</p>
+      {showModal && (
+        <div>
+          <button onClick={() => setShowModal(false)}>Close more info</button>
+          <p>Most recent commit</p>
+          <p>Commit author</p>
+          <p>Commit message</p>
 
-        {readMeMarkdown ? (
-          <div>
-            <p>README</p>
-            <ReactMarkdown>{readMeMarkdown}</ReactMarkdown>
-          </div>
-        ) : (
-          <p>No README available</p>
-        )}
-      </div>
+          {readMeMarkdown ? (
+            <div>
+              <p>README</p>
+              <ReactMarkdown>{readMeMarkdown}</ReactMarkdown>
+            </div>
+          ) : (
+            <p>No README available</p>
+          )}
+        </div>
+      )}
     </div>
   );
 }
