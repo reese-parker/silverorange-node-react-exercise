@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import axios from 'axios';
+import localRepoData from '../../data/repos.json';
 
 export const repos = Router();
 
@@ -11,5 +12,9 @@ repos.get('/', async (req, res) => {
     .then((response) => response.data)
     .catch((err) => res.status(500).json(err));
 
-  res.status(200).json(apiRepoData);
+  const aggregateRepoData = [...localRepoData, ...apiRepoData].filter(
+    (repo) => !repo.fork
+  );
+
+  res.status(200).json(aggregateRepoData);
 });
