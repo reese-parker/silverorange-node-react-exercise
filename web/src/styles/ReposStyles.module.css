@@ -1,0 +1,28 @@
+.reposContainer {
+  width: 96%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loadingFailedMessage {
+  width: 250px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+button {
+  border: 1px solid black;
+  font-weight: 600;
+  font-size: 0.8rem;
+  border-radius: 5px;
+  background-color: rgb(68, 68, 68);
+  color: white;
+  cursor: pointer;
+}
+
+.loadingFailedMessage > button {
+  width: 100px;
+  height: 50px;
+}

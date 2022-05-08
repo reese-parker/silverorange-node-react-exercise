@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import useFetchReposFromServer from '../hooks/useFetchReposFromServer';
+import styles from '../styles/ReposStyles.module.css';
 
 import Repo from './Repo';
 
@@ -9,18 +10,21 @@ export default function Repos() {
     useFetchReposFromServer();
 
   return (
-    <div>
-      <p>{loadingStatus}</p>
+    <section className={styles.reposContainer}>
+      {loadingStatus === 'loading' && <p>Loading...</p>}
 
       {/* Renders retry button if get request fails */}
       {loadingStatus === 'failed' && (
-        <button onClick={fetchReposFromServer}>Try again</button>
+        <div className={styles.loadingFailedMessage}>
+          <p>Something went wrong...</p>
+          <button onClick={fetchReposFromServer}>Try again</button>
+        </div>
       )}
 
       {loadingStatus === 'succeeded' && (
         <>
           {/* Renders buttons from language array */}
-          <div>
+          <div className={styles.languageButtonsContainer}>
             <button onClick={() => setLanguageFilter('all')}>Show all</button>
             {languages.map((language) => (
               <button
@@ -45,6 +49,6 @@ export default function Repos() {
           </div>
         </>
       )}
-    </div>
+    </section>
   );
 }
