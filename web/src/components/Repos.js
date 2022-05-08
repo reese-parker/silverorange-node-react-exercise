@@ -4,6 +4,8 @@ import organizeReverseChronological from '../helpers/organizeReverseChronologica
 
 export default function Repos() {
   const [repos, setRepos] = useState([]);
+  const [languages, setLanguages] = useState([]);
+  const [languageFilter, setLanguageFilter] = useState('all');
   const [loadingStatus, setLoadingStatus] = useState('idle');
 
   const fetchReposFromServer = () => {
@@ -14,6 +16,9 @@ export default function Repos() {
         setLoadingStatus('succeeded');
         const data = organizeReverseChronological(response.data);
         setRepos(data);
+
+        // Creates new array with unique language values
+        setLanguages([...new Set(data.map((repo) => repo.language))]);
       })
       .catch((err) => {
         setLoadingStatus('failed');
@@ -34,8 +39,34 @@ export default function Repos() {
         <button onClick={fetchReposFromServer}>Try again</button>
       )}
 
-      {/* Renders first repo to confirm data */}
-      {repos.length > 0 && <p>{repos[0].name}</p>}
+      {loadingStatus === 'succeeded' && (
+        <>
+          {/* Renders buttons from language array */}
+          <div>
+            <button onClick={() => setLanguageFilter('all')}>Show all</button>
+            {languages.map((language) => (
+              <button
+                key={language}
+                onClick={() => setLanguageFilter(language)}
+              >
+                {language}
+              </button>
+            ))}
+          </div>
+
+          {/* Renders repo names, filters if a language is selected */}
+          <div>
+            {languageFilter === 'all'
+              ? repos.map((repo) => <p key={repo.id}>{repo.name}</p>)
+              : repos.map(
+                  (repo) =>
+                    repo.language === languageFilter && (
+                      <p key={repo.id}>{repo.name}</p>
+                    )
+                )}
+          </div>
+        </>
+      )}
     </div>
   );
 }
