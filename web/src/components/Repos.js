@@ -1,34 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import organizeReverseChronological from '../helpers/organizeReverseChronological';
+import React, { useState } from 'react';
+import useFetchReposFromServer from '../hooks/useFetchReposFromServer';
+
 import Repo from './Repo';
 
 export default function Repos() {
-  const [repos, setRepos] = useState([]);
-  const [languages, setLanguages] = useState([]);
   const [languageFilter, setLanguageFilter] = useState('all');
-  const [loadingStatus, setLoadingStatus] = useState('idle');
-
-  const fetchReposFromServer = () => {
-    setLoadingStatus('loading');
-    axios
-      .get('http://localhost:4000/repos')
-      .then((response) => {
-        setLoadingStatus('succeeded');
-        const data = organizeReverseChronological(response.data);
-        setRepos(data);
-        // Creates new array with unique language values
-        setLanguages([...new Set(data.map((repo) => repo.language))]);
-      })
-      .catch((err) => {
-        setLoadingStatus('failed');
-        return err;
-      });
-  };
-
-  useEffect(() => {
-    fetchReposFromServer();
-  }, []);
+  const { repos, languages, loadingStatus, fetchReposFromServer } =
+    useFetchReposFromServer();
 
   return (
     <div>
