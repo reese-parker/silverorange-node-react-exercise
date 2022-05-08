@@ -1,0 +1,10 @@
+.appContainer {
+    background-color: rgb(226, 226, 226);
+    min-height: 100vh;
+    font-family: 'Merriweather', serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+  }
+  
